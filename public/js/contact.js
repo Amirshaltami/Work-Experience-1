@@ -1,5 +1,11 @@
 const form = document.getElementById('contact-form');
 const statusEl = document.getElementById('form-status');
+const loadedInput = document.getElementById('loadedAt');
+//Records the exact milisecond time of when the page is first loading 
+let formLoadedAt = Date.now()
+if(loadedInput){
+  loadedInput.value = formLoadedAt;
+}
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -24,6 +30,11 @@ form.addEventListener('submit', async (event) => {
     }
 
     form.reset();
+    //Resets the stopwatch after form.reset() clears the inputs so when an actual user sends another message, the timer will start fresh
+    formLoadedAt = Date.now()
+    if(loadedInput){
+      loadedInput.value = formLoadedAt
+    }
     statusEl.textContent = "Thanks, we'll be in touch within one business day.";
     statusEl.classList.add('form-status--success');
   } catch (error) {
